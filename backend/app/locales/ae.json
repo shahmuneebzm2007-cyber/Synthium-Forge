@@ -1,0 +1,18 @@
+{
+  "locale": "ae",
+  "language": "en",
+  "currency": {"code": "AED", "symbol": "AED", "minor_units": 2, "symbol_position": "before"},
+  "date_format": "DD/MM/YYYY",
+  "number_format": {"decimal": ".", "thousands": ","},
+  "weekend_days": [5, 6],
+  "tax_rules": [{"label": "VAT", "rate": "0.05", "rounding": "per_invoice", "inclusive": false}],
+  "names": {
+    "given_male": ["Mohammed","Ahmed","Ali","Omar","Khalid","Hassan","Rashid","Saeed","Faisal","Tariq","Sultan","Majid","Hamdan","Zayed","Mansoor","Nasser","Abdullah","Ibrahim","Yousuf","Salim","Hamza","Bilal","Fahad","Waleed","Badr","Adel","Sami","Jaber","Khaled","Rashed","Thani","Salem"],
+    "given_female": ["Fatima","Aisha","Maryam","Hessa","Shamma","Noura","Latifa","Maitha","Reem","Sara","Dana","Hind","Amna","Sheikha","Mouza","Rawdha","Alia","Salama","Wadha","Meera","Shamsa","Roudha","Jawaher","Maha","Laila","Lubna","Nada","Hanan","Dalal","Asma","Sumaya","Ghalia"],
+    "family": ["Al Maktoum","Al Nahyan","Al Falasi","Al Ketbi","Al Shamsi","Al Mazrouei","Al Dhaheri","Al Mulla","Al Suwaidi","Al Mansouri","Al Hashemi","Al Kaabi","Al Nuaimi","Al Zaabi","Al Ameri","Al Tayer","Al Ghurair","Al Habtoor","Al Futtaim","Al Rostamani","Al Naboodah","Al Majid","Al Banna","Al Sayegh","Al Khouri","Al Jarwan","Al Muhairi","Al Shehi","Al Marri","Al Ali","Bin Zayed","Bin Rashid"]
+  },
+  "cities": {"Dubai": 0.35, "Abu Dhabi": 0.28, "Sharjah": 0.15, "Ajman": 0.08, "Ras Al Khaimah": 0.05, "Fujairah": 0.04, "Umm Al Quwain": 0.03, "Al Ain": 0.02},
+  "merchants": ["Carrefour UAE","Lulu Hypermarket","Spinneys","Waitrose UAE","Choithrams","Geant","Al Maya Supermarket","ADNOC Fuel","ENOC Station","Emirates NBD ATM","FAB ATM","Dubai Taxi","Uber Dubai","Careem","Noon.com","Amazon.ae","Namshi","Sharaf DG","Jumbo Electronics","Virgin Megastore","Centrepoint","Max Fashion","H&M UAE","Zara UAE","IKEA UAE","Home Centre","ACE Hardware UAE","Tim Hortons","Shakespeare & Co","The Cheesecake Factory","PF Chang's","Nando's UAE","McDonald's UAE","KFC UAE","Pizza Hut UAE","DEWA Bill","Etisalat","du Telecom","Salik Toll","RTA Parking","Emirates Post","Al Futtaim Auto","Fitness First","Gold's Gym","Paris Gallery","Level Shoes","Ounass","That Concept Store","Tavola","MR DIY"],
+  "companies": ["Horizon Digital Agency","Desert Storm Solutions","Gulf Tech Ventures","Oasis Systems LLC","Palm City Consulting","Falcon Industries FZ","Burj Analytics","Emirates Cloud Services","Dhow Trading Co.","Al Safa Digital","Marina Bay Software","Sand Dune Logistics","Corniche Financial","Khalifa Tech Hub","Yas Innovation Lab","Al Reem Solutions","Creek Side Ventures","Al Barsha Systems","JBR Digital Works","DIFC Analytics Group","Gold Souk Trading","Jumeirah Tech Co.","Motor City Solutions","Silicon Oasis Labs","Al Quoz Industrial","Pearl Diving Digital","Trade Centre Systems","Nad Al Sheba Services","Knowledge Park Labs","Internet City Solutions"],
+  "email_domain": "example.com"
+}

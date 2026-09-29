@@ -1,0 +1,18 @@
+{
+  "locale": "us",
+  "language": "en",
+  "currency": {"code": "USD", "symbol": "$", "minor_units": 2, "symbol_position": "before"},
+  "date_format": "MM/DD/YYYY",
+  "number_format": {"decimal": ".", "thousands": ","},
+  "weekend_days": [6, 0],
+  "tax_rules": [{"label": "Sales Tax", "rate": "0.0825", "rounding": "per_line", "inclusive": false}],
+  "names": {
+    "given_male": ["James","John","Robert","Michael","David","William","Daniel","Matthew","Joseph","Andrew","Joshua","Christopher","Ethan","Alexander","Benjamin","Lucas","Mason","Logan","Jackson","Liam","Noah","Aiden","Carter","Owen","Dylan","Jayden","Nathan","Caleb","Ryan","Hunter","Elijah","Connor"],
+    "given_female": ["Mary","Patricia","Jennifer","Linda","Emma","Sophia","Olivia","Ava","Isabella","Mia","Charlotte","Amelia","Harper","Abigail","Emily","Ella","Elizabeth","Sofia","Avery","Chloe","Lily","Grace","Zoe","Penelope","Riley","Layla","Nora","Aria","Scarlett","Hannah","Aubrey","Luna"],
+    "family": ["Smith","Johnson","Williams","Brown","Jones","Garcia","Miller","Davis","Rodriguez","Martinez","Hernandez","Lopez","Gonzalez","Wilson","Anderson","Thomas","Taylor","Moore","Jackson","Martin","Lee","Perez","Thompson","White","Harris","Sanchez","Clark","Ramirez","Lewis","Robinson","Walker","Young"]
+  },
+  "cities": {"New York": 0.18, "Los Angeles": 0.14, "Chicago": 0.10, "Houston": 0.09, "Phoenix": 0.07, "San Francisco": 0.06, "Philadelphia": 0.06, "San Antonio": 0.05, "San Diego": 0.05, "Dallas": 0.05, "Austin": 0.04, "Seattle": 0.04, "Denver": 0.04, "Boston": 0.03},
+  "merchants": ["Whole Foods Market","Trader Joe's","Target","Walmart","Costco","Safeway","Kroger","7-Eleven","CVS Pharmacy","Walgreens","Home Depot","Lowe's","Best Buy","Apple Store","Amazon Fresh","Starbucks","Chipotle","Subway","McDonald's","Panera Bread","Uber Eats","DoorDash","Netflix","Spotify","Hulu","AT&T Wireless","Verizon","T-Mobile","Shell Gas","Chevron","ExxonMobil","BP Station","PG&E","ConEd","Spectrum Cable","Comcast","Planet Fitness","LA Fitness","Nordstrom","Macy's","REI","Petco","Trader Joe's Wine","Whole Foods 365","Sprouts Market","Smart & Final","Aldi","Dollar Tree","Bath & Body Works","Old Navy"],
+  "companies": ["Greenfield Technologies","Pinnacle Consulting Group","Summit Analytics Inc.","Atlas Data Solutions","Horizon Digital Agency","Brightwave Software","Cloudfort Systems","NexGen Solutions","Vertex Industries","Ironclad Enterprises","Pacific Rim Trading","Redwood Capital Partners","Silicon Prairie Corp","Amber Wave Logistics","Blue Ridge Manufacturing","Prairie Wind Energy","Mountain View Labs","Cascade Financial","River Rock Holdings","Starlight Media Group","Coastal Dynamics","Northern Star Digital","Evergreen Systems","Sunbelt Solutions","Great Plains Tech","Harbor Point Ventures","Oak Grove Partners","Silver Lake Software","Canyon Creek Industries","Thunder Bay Analytics"],
+  "email_domain": "example.com"
+}

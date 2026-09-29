@@ -1,0 +1,21 @@
+order_id,customer_id,product,quantity,unit_price,order_date,status,discount,city,notes
+5001,10001,Smart Lamp,2,4500,2024-01-15,delivered,0,Karachi,
+5002,10002,Eco Backpack,1,3200,2024-01-20,delivered,,Lahore,gift wrap
+5003,10003,Pro Headset,3,8900,2024-02-10,delivered,500,Islamabad,bulk order
+5004,10004,Classic Kettle,,2100,2024-02-14,,0,Karachi,Valentine gift
+5005,10001,Urban Sneakers,1,,2024-03-01,delivered,0,Karachi,
+5006,,Compact Charger,2,1500,bad-date,cancelled,0,,
+5007,10005,Prime Notebook,1,12000,2024-03-22,delivered,1200,Rawalpindi,VIP discount
+5008,10002,Daily Bottle,5,800,2024-04-01,delivered,0,Lahore,office supplies
+5009,10006,Elite Mixer,-1,6500,2024-04-15,returned,0,Lahore,defective unit
+5010,10003,Swift Fan,2,3800,2024-05-01,pending,0,Islamabad,
+5011,10007,Zen Pillow,1,2200,2024-05-20,delivered,0,Peshawar,
+5012,10001,Bright Mug,10,450,2024/06/15,delivered,100,Karachi,bulk purchase
+5013,10008,Cozy Jacket,1,15000,2024-07-01,delivered,0,Karachi,winter collection
+5014,10009,Fresh Speaker,2,5500,,delivered,0,Multan,
+5015,10010,Pure Watch,1,25000,2024-08-14,delivered,2500,Islamabad,independence day sale
+5016,10004,Smart Lamp,NULL,4500,2024-09-01,pending,0,Karachi,reorder
+5017,10011,Pro Headset,1,8900,2024-09-15,delivered,0,Faisalabad,
+5018,10012,Urban Sneakers,2,7200,2024-10-01,delivered,720,Karachi,VIP 10% off
+5019,10003,Elite Mixer,1,6500,2024-10-20,delivered,0,Islamabad,replacement
+5020,10013,Compact Charger,3,1500,2024-11-11,delivered,0,Lahore,11.11 sale

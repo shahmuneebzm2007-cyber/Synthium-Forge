@@ -1,0 +1,18 @@
+{
+  "locale": "in",
+  "language": "en",
+  "currency": {"code": "INR", "symbol": "₹", "minor_units": 2, "symbol_position": "before"},
+  "date_format": "DD/MM/YYYY",
+  "number_format": {"decimal": ".", "thousands": ","},
+  "weekend_days": [6, 0],
+  "tax_rules": [{"label": "CGST", "rate": "0.09"}, {"label": "SGST", "rate": "0.09"}],
+  "names": {
+    "given_male": ["Aarav","Vivaan","Aditya","Vihaan","Arjun","Sai","Reyansh","Ayaan","Krishna","Ishaan","Shaurya","Atharva","Advait","Dhruv","Kabir","Ritvik","Aarush","Kian","Darsh","Rudra","Pranav","Aryan","Rohan","Ravi","Vikram","Amit","Rahul","Suresh","Anand","Karthik","Ganesh","Nikhil"],
+    "given_female": ["Aadhya","Ananya","Saanvi","Aanya","Aarohi","Pari","Diya","Myra","Sara","Kiara","Aditi","Isha","Kavya","Priya","Meera","Ria","Tara","Nisha","Pooja","Shruti","Anjali","Deepika","Lakshmi","Sita","Radha","Neha","Riya","Tanvi","Anika","Srishti","Avni","Ishita"],
+    "family": ["Sharma","Verma","Gupta","Kumar","Singh","Patel","Shah","Joshi","Mehta","Reddy","Nair","Iyer","Rao","Das","Chatterjee","Banerjee","Mukherjee","Agarwal","Jain","Mishra","Pandey","Tiwari","Chauhan","Rajput","Malhotra","Kapoor","Sinha","Bose","Sen","Pillai","Menon","Krishnan"]
+  },
+  "cities": {"Mumbai": 0.20, "Delhi": 0.18, "Bangalore": 0.14, "Hyderabad": 0.10, "Chennai": 0.08, "Kolkata": 0.07, "Pune": 0.06, "Ahmedabad": 0.05, "Jaipur": 0.04, "Lucknow": 0.03, "Chandigarh": 0.02, "Kochi": 0.02, "Indore": 0.01},
+  "merchants": ["Big Bazaar","Reliance Fresh","DMart","Spencer's","Star Bazaar","More Megastore","Nilgiris","Nature's Basket","Foodhall","Hypercity","Croma","Vijay Sales","Reliance Digital","Flipkart","Amazon India","Myntra","Nykaa","BigBasket","Swiggy","Zomato","Uber India","Ola Cabs","IRCTC","BookMyShow","MakeMyTrip","Cafe Coffee Day","Barbeque Nation","Haldiram's","MTR Foods","Saravana Bhavan","Domino's India","Pizza Hut India","McDonald's India","KFC India","Starbucks India","Tanishq","Fabindia","Allen Solly","Peter England","Shoppers Stop","Lifestyle Stores","Westside","Max Fashion India","Reliance Trends","Indian Oil","Bharat Petroleum","HP Petrol","Airtel","Jio","Vi Telecom"],
+  "companies": ["Crescent Digital Solutions","Tata Consulting (Fictional)","Infosys Labs (Fictional)","Wipro Digital (Fictional)","HCL Ventures (Fictional)","Tech Mahindra Works (Fictional)","Mindtree Solutions (Fictional)","Mphasis Labs (Fictional)","LTIMindtree (Fictional)","Persistent Systems (Fictional)","Zensar Labs (Fictional)","NIIT Technologies (Fictional)","Birla Soft (Fictional)","Hexaware Tech (Fictional)","Cyient Labs (Fictional)","Coforge Solutions (Fictional)","Sonata Software (Fictional)","KPIT Technologies (Fictional)","Firstsource Labs (Fictional)","Mastek Solutions (Fictional)","iGate Digital (Fictional)","Polaris Labs (Fictional)","Rolta India (Fictional)","Sasken Tech (Fictional)","Subex Analytics (Fictional)","3i Infotech (Fictional)","Ramco Systems (Fictional)","Nucleus Software (Fictional)","Intellect Design (Fictional)","Newgen Software (Fictional)"],
+  "email_domain": "example.com"
+}

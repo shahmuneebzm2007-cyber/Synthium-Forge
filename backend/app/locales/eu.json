@@ -1,0 +1,18 @@
+{
+  "locale": "eu",
+  "language": "de",
+  "currency": {"code": "EUR", "symbol": "€", "minor_units": 2, "symbol_position": "after"},
+  "date_format": "DD.MM.YYYY",
+  "number_format": {"decimal": ",", "thousands": "."},
+  "weekend_days": [6, 0],
+  "tax_rules": [{"label": "MwSt./VAT", "rate": "0.19", "rounding": "per_invoice", "inclusive": true}],
+  "names": {
+    "given_male": ["Lukas","Leon","Maximilian","Felix","Noah","Ben","Paul","Elias","Jonas","Finn","Julian","Tim","Moritz","David","Niklas","Jan","Alexander","Luca","Tom","Phillip","Sebastian","Tobias","Marcel","Fabian","Erik","Lars","Marco","Stefan","Florian","Daniel","Andreas","Christian"],
+    "given_female": ["Emma","Mia","Hannah","Sophia","Emilia","Lina","Marie","Lea","Anna","Lena","Clara","Johanna","Laura","Lisa","Sarah","Julia","Katharina","Charlotte","Amelie","Luisa","Nele","Ida","Greta","Helena","Frieda","Ella","Pauline","Antonia","Theresa","Marlene","Maja","Elena"],
+    "family": ["Müller","Schmidt","Schneider","Fischer","Weber","Meyer","Wagner","Becker","Schulz","Hoffmann","Koch","Richter","Wolf","Klein","Schröder","Neumann","Schwarz","Braun","Zimmermann","Krüger","Hartmann","Lange","Werner","Schmitt","Meier","Lehmann","Huber","Krause","Maier","Kaiser","Fuchs","Scholz"]
+  },
+  "cities": {"Berlin": 0.18, "Munich": 0.12, "Hamburg": 0.10, "Frankfurt": 0.09, "Cologne": 0.07, "Stuttgart": 0.06, "Düsseldorf": 0.05, "Amsterdam": 0.05, "Brussels": 0.04, "Vienna": 0.04, "Zurich": 0.04, "Paris": 0.06, "Milan": 0.05, "Madrid": 0.05},
+  "merchants": ["REWE","EDEKA","Aldi Süd","Lidl","Kaufland","Penny","Netto","dm Drogerie","Rossmann","Müller Drogerie","MediaMarkt","Saturn","Conrad","Amazon.de","Zalando","About You","Otto","Douglas","Thalia","Hugendubel","Deutsche Bahn","Flixbus","Deutsche Post","DHL","Shell DE","Aral","Total DE","Starbucks DE","McDonald's DE","Vapiano","Hans im Glück","Block House","Dallmayr","Tchibo","Ikea DE","OBI","Bauhaus","Hornbach","C&A","H&M DE","Zara DE","Deichmann","Fielmann","Apollo Optik","DocMorris","TK Versand","Telekom","Vodafone DE","O2 Germany","1&1"],
+  "companies": ["Rhine Valley Solutions GmbH","Alpine Tech AG","Bavarian Digital GmbH","Berlin Startup Hub","Frankfurt Financial Tech","Munich Innovation Labs","Hamburg Maritime Solutions","Schwarzwald Software","Rheinland Systems","Bodensee Analytics","Heidelberg Data GmbH","Dresden Dynamics","Hansa Trading GmbH","Westfalen Industries","Sächsische Software","Nord-Ostsee Digital","Donau Systems","Main River Analytics","Elbe Consulting","Neckar Solutions","Isar Technology","Spree Digital","Alster Ventures","Weser Systems","Mosel Analytics","Pfalz Innovation","Schwaben Software","Franken Digital","Ruhr Valley Tech","Europa Cloud Services"],
+  "email_domain": "example.com"
+}

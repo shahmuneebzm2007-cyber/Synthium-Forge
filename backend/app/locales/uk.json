@@ -1,0 +1,18 @@
+{
+  "locale": "uk",
+  "language": "en",
+  "currency": {"code": "GBP", "symbol": "£", "minor_units": 2, "symbol_position": "before"},
+  "date_format": "DD/MM/YYYY",
+  "number_format": {"decimal": ".", "thousands": ","},
+  "weekend_days": [6, 0],
+  "tax_rules": [{"label": "VAT", "rate": "0.20", "rounding": "per_invoice", "inclusive": true}],
+  "names": {
+    "given_male": ["Oliver","George","Harry","Noah","Jack","Leo","Arthur","Muhammad","Oscar","Charlie","Henry","Theodore","Alfie","William","Thomas","James","Edward","Archie","Freddie","Alexander","Finley","Jacob","Sebastian","Lucas","Ethan","Isaac","Max","Logan","Samuel","Daniel","Joshua","Harrison"],
+    "given_female": ["Olivia","Amelia","Isla","Ava","Ivy","Freya","Lily","Florence","Mia","Willow","Rosie","Sophie","Ella","Grace","Phoebe","Evie","Scarlett","Emily","Aria","Sienna","Isabella","Charlotte","Harper","Poppy","Daisy","Ruby","Matilda","Jessica","Alice","Elsie","Maisie","Luna"],
+    "family": ["Smith","Jones","Williams","Taylor","Brown","Davies","Evans","Wilson","Thomas","Roberts","Johnson","Walker","Robinson","Wood","Thompson","White","Watson","Jackson","Wright","Green","Harris","Cooper","King","Lee","Clarke","Lewis","Hall","Young","Allen","Mitchell","Turner","Baker"]
+  },
+  "cities": {"London": 0.25, "Manchester": 0.12, "Birmingham": 0.10, "Leeds": 0.08, "Glasgow": 0.07, "Liverpool": 0.06, "Bristol": 0.06, "Edinburgh": 0.05, "Sheffield": 0.04, "Cardiff": 0.04, "Newcastle": 0.04, "Nottingham": 0.03, "Belfast": 0.03, "Leicester": 0.03},
+  "merchants": ["Tesco","Sainsbury's","ASDA","Morrisons","Waitrose","M&S Food","Aldi UK","Lidl UK","Co-op Food","Ocado","Boots Pharmacy","Superdrug","WHSmith","John Lewis","Argos","Currys","B&Q","Homebase","Primark","Next","ASOS","Topshop","Zara UK","H&M UK","Sports Direct","JD Sports","Greggs","Costa Coffee","Pret a Manger","Nando's","Wagamama","Deliveroo","Just Eat","British Gas","EDF Energy","Sky TV","BT Broadband","Three Mobile","EE","Shell UK","BP UK","Total Energies","Waterstones","HMV","Holland & Barrett","Screwfix","Toolstation","Pets at Home","The Range","Dunelm","TK Maxx"],
+  "companies": ["Northwind Supplies Ltd","Blackstone Digital","Thames Valley Tech","Highland Ventures","Wessex Analytics","Crown Systems Ltd","Empire Consulting","Buckingham Data","Oxford Digital Solutions","Cambridge Innovation Lab","Sterling Financial Services","Redbridge Holdings","Windsor Technology Group","Whitehall Enterprises","Carlton Industries","Pembroke Capital","Queensgate Software","Kensington Partners","Richmond Media Group","Bayswater Solutions","Greenwich Analytics","Chelsea Digital","Mayfair Consulting","Knightsbridge Capital","Canary Wharf Tech","Stratford Systems","Paddington Services","Westminster Solutions","Victoria Ventures","Bloomsbury Labs"],
+  "email_domain": "example.com"
+}

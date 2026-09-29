@@ -1,0 +1,21 @@
+customer_id,full_name,email,city,signup_date,segment,age,gender
+10001,Bilal Khan,bilal.khan10001@example.com,Karachi,2023-03-15,regular,28,M
+10002,Ayesha Ahmed,ayesha.ahmed10002@example.com,Lahore,2023-04-22,loyal,34,F
+10003,Hamza Shah,hamza.shah10003@example.com,Islamabad,2023-01-10,vip,45,M
+10004,Sana Malik,sana.malik10004@example.com,Karachi,2023-06-01,regular,22,F
+10005,Omar Raza,omar.raza10005@example.com,Rawalpindi,2023-07-19,regular,31,M
+10006,Fatima Hussain,fatima.hussain10006@example.com,Lahore,2023-02-28,loyal,29,F
+10007,Farhan Iqbal,farhan.iqbal10007@example.com,Peshawar,2023-08-14,regular,38,M
+10008,Nadia Farooq,nadia.farooq10008@example.com,Karachi,2023-05-05,regular,26,F
+10009,Qasim Usman,qasim.usman10009@example.com,Multan,2023-09-30,regular,41,M
+10010,Kiran Butt,kiran.butt10010@example.com,Islamabad,2023-03-20,loyal,33,F
+10011,Talha Khan,talha.khan10011@example.com,Faisalabad,2023-11-01,regular,24,M
+10012,Hira Ahmed,hira.ahmed10012@example.com,Karachi,2023-12-15,vip,50,F
+10013,Ahmed Shah,ahmed.shah10013@example.com,Lahore,2024-01-05,regular,27,M
+10014,Maryam Malik,maryam.malik10014@example.com,Quetta,2024-02-14,regular,36,F
+10015,Zain Raza,zain.raza10015@example.com,Islamabad,2024-03-01,loyal,30,M
+10016,Layla Hussain,layla.hussain10016@example.com,Karachi,2024-04-10,regular,25,F
+10017,Saad Iqbal,saad.iqbal10017@example.com,Rawalpindi,2024-05-20,regular,42,M
+10018,Rania Farooq,rania.farooq10018@example.com,Lahore,2024-06-30,regular,28,F
+10019,Ali Usman,ali.usman10019@example.com,Karachi,2024-07-04,vip,55,M
+10020,Zara Butt,zara.butt10020@example.com,Islamabad,2024-08-15,loyal,32,F

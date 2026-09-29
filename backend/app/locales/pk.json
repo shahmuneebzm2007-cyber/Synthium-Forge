@@ -1,0 +1,20 @@
+{
+  "locale": "pk",
+  "language": "en",
+  "currency": {"code": "PKR", "symbol": "Rs.", "minor_units": 2, "symbol_position": "before"},
+  "date_format": "DD/MM/YYYY",
+  "number_format": {"decimal": ".", "thousands": ","},
+  "weekend_days": [6, 0],
+  "tax_rules": [{"label": "GST", "rate": "0.18", "rounding": "per_invoice", "inclusive": false}],
+  "names": {
+    "given_male": ["Bilal","Hamza","Omar","Farhan","Qasim","Talha","Ahmed","Zain","Saad","Ali","Usman","Asad","Shahzaib","Jawad","Hassan","Noman","Kamran","Faisal","Junaid","Irfan","Rizwan","Imran","Salman","Aamir","Tariq","Raza","Waqar","Adeel","Naeem","Arif","Kashif","Owais","Mubashir"],
+    "given_female": ["Ayesha","Sana","Fatima","Nadia","Kiran","Hira","Maryam","Zara","Madiha","Rabia","Bushra","Amna","Iqra","Samina","Uzma","Noor","Alina","Sara","Mehwish","Sobia","Saima","Anam","Sidra","Nimra","Areeba","Laiba","Maheen","Anum","Huma","Farah","Humaira","Afshan"],
+    "family": ["Khan","Ahmed","Shah","Malik","Raza","Hussain","Iqbal","Farooq","Usman","Butt","Qureshi","Awan","Bhatti","Javed","Siddiqui","Mirza","Chaudhry","Abbasi","Niazi","Aslam","Rehman","Sheikh","Mughal","Hashmi","Dar","Gill","Baig","Zaidi","Naqvi","Syed","Rizvi","Kazmi"]
+  },
+  "cities": {"Karachi": 0.32, "Lahore": 0.28, "Islamabad": 0.14, "Rawalpindi": 0.08, "Peshawar": 0.06, "Multan": 0.04, "Faisalabad": 0.03, "Quetta": 0.02, "Sialkot": 0.01, "Hyderabad": 0.02},
+  "address_templates": ["House {n}, Street {s}, {area}, {city}", "Flat {n}, Block {s}, Phase {p}, DHA, {city}", "{n} {area} Road, {city}"],
+  "phone_patterns": ["+92-3{2d}-{7d}"],
+  "merchants": ["Greenleaf Market","Imtiaz Super Store","Chase Up","Al-Fatah","Metro Cash & Carry","Bata Shoes","Khaadi","Sapphire","Junaid Jamshed","Gul Ahmed","Alkaram Studio","HUM Mart","Jalal Sons","Hyperstar","Dolmen Mall Retail","Naheed Supermarket","Rahat Bakery","Student Biryani","Savour Foods","Shandar Sweets","Tehzeeb Bakers","Nishat Linen","Limelight","Bonanza Satrangi","ChenOne","Packages Mall Shop","Xander's Cafe","The Monal","Howdy","Gloria Jeans PK","Carrefour Pakistan","United Bakery","Jalal Sweets","Anarkali Bazaar","Rainbow Centre","Fortress Square Store","Ideas by Gul Ahmed","Sana Safinaz","Maria B Store","ECS Shoes","Outfitters","Breakout","Charcoal","Royal Tag","Hub Leather","Leisure Club","Stylo Shoes","Service Industries","K-Electric Bill","PTCL Bill","Jazz Recharge"],
+  "companies": ["Crescent Solutions Pvt Ltd","Atlas Trading Co.","Pioneer Technologies","Fauji Foundation Services","Lucky Cement Corp (Fictional)","Engro Digital Works","HBL Tech Solutions (Fictional)","NETSOL Labs (Fictional)","Systems Limited (Fictional)","Fatima Ventures","Dawood Enterprises","MCB Financial (Fictional)","Askari Digital","Bestway Holdings (Fictional)","Packages Group (Fictional)","Sapphire Textile (Fictional)","Interloop Solutions (Fictional)","Descon Engineering (Fictional)","Habib Rafiq Group (Fictional)","Nishat Group (Fictional)","Al-Ghazi Industries (Fictional)","Millat Tractors (Fictional)","National Foods (Fictional)","Shan Foods (Fictional)","Tapal Tea (Fictional)","Mitchell's (Fictional)","Peek Freans (Fictional)","Haleeb Foods (Fictional)","Olper's Dairy (Fictional)","Jazz Telecom (Fictional)"],
+  "email_domain": "example.com"
+}

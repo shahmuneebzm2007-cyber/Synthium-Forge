@@ -1,0 +1,85 @@
+{
+  "templates": [
+    {
+      "id": "retail_pk",
+      "name": "E-Commerce Retail (Pakistan)",
+      "description": "Customers, products, orders, and order items for a Pakistani e-commerce store. PKR currency, GST tax, Pakistani cities and names.",
+      "domain": "retail",
+      "locale": "pk",
+      "currency": "PKR",
+      "prompt": "Generate a retail dataset with 1000 customers, products, orders, and order items for a Pakistani e-commerce store",
+      "defaults": {
+        "customers": 1000,
+        "products": 60,
+        "seed": 42
+      }
+    },
+    {
+      "id": "retail_us",
+      "name": "E-Commerce Retail (US)",
+      "description": "Standard US retail dataset with sales tax.",
+      "domain": "retail",
+      "locale": "us",
+      "currency": "USD",
+      "prompt": "Generate a retail dataset with 1000 customers for a US e-commerce store",
+      "defaults": {
+        "customers": 1000,
+        "products": 60,
+        "seed": 42
+      }
+    },
+    {
+      "id": "fintech_us",
+      "name": "Fintech / Banking (US)",
+      "description": "Bank accounts, debit/credit cards, merchants, and transaction ledger with running balances.",
+      "domain": "fintech",
+      "locale": "us",
+      "currency": "USD",
+      "prompt": "Generate a fintech dataset with 500 accounts, cards, and transactions",
+      "defaults": {
+        "accounts": 500,
+        "cards": 400,
+        "seed": 42
+      }
+    },
+    {
+      "id": "invoice_pk",
+      "name": "Invoice Pack (Pakistan)",
+      "description": "Generate invoices with line items, GST tax, and reconciled totals. Includes PDF with SYNTHETIC watermark.",
+      "domain": "documents",
+      "locale": "pk",
+      "currency": "PKR",
+      "prompt": "Generate 10 invoices for a Pakistani services company",
+      "defaults": {
+        "count": 10,
+        "n_lines": 4,
+        "seed": 42
+      }
+    },
+    {
+      "id": "statement_pk",
+      "name": "Bank Statement (Pakistan)",
+      "description": "90-day bank statement with recurring salary, discretionary spending, and constraint satisfaction.",
+      "domain": "documents",
+      "locale": "pk",
+      "currency": "PKR",
+      "prompt": "Generate a 90-day bank statement for a Pakistani salaried employee, opening balance Rs.1200, never below Rs.500",
+      "defaults": {
+        "period_days": 90,
+        "opening_balance": 1200.00,
+        "min_balance": 500.00,
+        "seed": 42
+      }
+    },
+    {
+      "id": "messy_data",
+      "name": "Messy Data (Testing)",
+      "description": "Upload the included orders_messy.csv to demo the profiler catching missing values, wrong types, and NULL strings.",
+      "domain": "upload",
+      "locale": "pk",
+      "currency": "PKR",
+      "prompt": "Upload orders_messy.csv from sample-data/",
+      "sample_file": "sample-data/orders_messy.csv"
+    }
+  ]
+}
