@@ -217,13 +217,29 @@ class StatementGenerator:
                 violations = [i for i, t in enumerate(transactions) if t.balance < config.min_balance]
                 if not violations:
                     break
-                # Reduce the largest discretionary debit before the violation
                 vi = violations[0]
+                fixed = False
                 for j in range(vi, -1, -1):
                     if transactions[j].debit > 0 and not transactions[j].is_recurring:
-                        reduction = min(transactions[j].debit // 2, config.min_balance - transactions[vi].balance + 1000)
-                        transactions[j].debit = max(100, transactions[j].debit - reduction)
-                        break
+                        reduction = (config.min_balance - transactions[vi].balance) + 500
+                        if transactions[j].debit >= reduction:
+                            transactions[j].debit -= reduction
+                            fixed = True
+                            break
+                        else:
+                            # Wipe out this debit and let the loop handle the rest
+                            transactions[j].debit = 0
+                            fixed = True
+                            break
+                if not fixed:
+                    # If we can't reduce debits, inject a credit to save it!
+                    transactions.insert(vi, Transaction(
+                        date=transactions[vi].date, description="Emergency Transfer In",
+                        category="transfer", merchant="Account Transfer",
+                        credit=(config.min_balance - transactions[vi].balance) + 1000,
+                        balance=0, debit=0
+                    ))
+                
                 # Recompute
                 balance = config.opening_balance
                 for t in transactions:

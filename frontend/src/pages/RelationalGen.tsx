@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Sparkles, Play, Database, CheckCircle2, ShieldCheck, Loader2, Download, Table2 } from 'lucide-react';
+import { Sparkles, Database, CheckCircle2, ShieldCheck, Loader2, Download, Table2 } from 'lucide-react';
 import api, { API_BASE_URL } from '../api';
 
 export default function RelationalGen() {

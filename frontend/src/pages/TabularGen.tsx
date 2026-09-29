@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { UploadCloud, Play, Download, Activity, CheckCircle2, AlertTriangle, FileJson, Settings } from 'lucide-react';
+import { UploadCloud, Play, Download, Activity, CheckCircle2, AlertTriangle, Settings } from 'lucide-react';
 import api, { API_BASE_URL } from '../api';
 
 export default function TabularGen() {

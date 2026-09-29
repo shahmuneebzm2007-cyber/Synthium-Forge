@@ -51,12 +51,28 @@ def fictional(hint: str, i: int, fake: Faker, locale: str = "en_US") -> str:
     names are synthetic but culturally plausible.
     """
     h = hint.lower()
-    if "email" in h:
-        return f"user{i:05d}@example.com"
-    if "phone" in h or "mobile" in h or "cell" in h:
-        return f"+00-000-{i:07d}"
+    
+    # Specific categorical fallbacks
+    if "gender" in h or "sex" in h:
+        return fake.random_element(elements=("Male", "Female", "Other"))
+    if "status" in h:
+        return fake.random_element(elements=("Pending", "Active", "Completed", "Cancelled", "Processing"))
+    if "reason" in h:
+        return fake.random_element(elements=("Checkup", "Consultation", "Follow-up", "Emergency", "Routine"))
+    if "specialty" in h:
+        return fake.random_element(elements=("Cardiology", "Neurology", "Pediatrics", "Oncology", "General"))
+        
+    # Standard PII fallbacks
+    if "first" in h and "name" in h:
+        return fake.first_name()
+    if "last" in h and "name" in h:
+        return fake.last_name()
     if "name" in h:
         return fake.name()
+    if "email" in h:
+        return f"{fake.user_name()}@example.com"
+    if "phone" in h or "mobile" in h or "cell" in h:
+        return fake.phone_number()
     if "address" in h or "street" in h:
         return fake.street_address()
     if "company" in h or "org" in h:
@@ -71,7 +87,9 @@ def fictional(hint: str, i: int, fake: Faker, locale: str = "en_US") -> str:
         return f"XXX-XX-{i:04d}"
     if "card" in h or "account" in h:
         return f"XXXX-XXXX-XXXX-{i:04d}"
-    return f"{hint}-{i:06d}"
+    
+    # Generic string fallback for unknown text/cats
+    return fake.word().capitalize()
 
 
 def apply_privacy(df: pd.DataFrame, actions: dict[str, str],
@@ -263,7 +281,7 @@ def synthesize(
         name, kind = c["name"], c["kind"]
         pii = c.get("pii", "none")
 
-        if pii == "direct" and kind != "id":
+        if pii == "direct" and kind not in ("id", "date", "datetime"):
             out[name] = [fictional(name, i, fake, locale) for i in range(n)]
         elif name in out.columns:
             continue

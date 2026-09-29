@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Layers, FileText, Database, Shield, Settings, Menu, X } from 'lucide-react';
+import { Layers, FileText, Database, Shield, Settings, Menu } from 'lucide-react';
 import TabularGen from './pages/TabularGen';
 import DocumentGen from './pages/DocumentGen';
 import PrivacyScan from './pages/PrivacyScan';

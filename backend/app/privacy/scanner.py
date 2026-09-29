@@ -150,8 +150,9 @@ class PIIScanner:
         if series.dtype == object and len(vals) > 0:
             uniq_ratio = vals.nunique() / len(vals) if len(vals) > 0 else 0
             avg_spaces = vals.str.count(" ").mean()
-            # Likely person names: high uniqueness + ~1 space per value
-            if uniq_ratio > 0.8 and 0.5 < avg_spaces < 3 and len(vals) > 20:
+            has_numbers = vals.str.contains(r"\d").any()
+            # Likely person names: high uniqueness + ~1 space per value, and no numbers (dates have numbers)
+            if uniq_ratio > 0.8 and 0.5 < avg_spaces < 3 and len(vals) > 20 and not has_numbers:
                 result.update(pii_level="direct", pii_type="probable_name",
                               detected_by=["heuristic"], suggested_action="synthetic",
                               confidence="review")

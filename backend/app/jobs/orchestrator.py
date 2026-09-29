@@ -65,7 +65,7 @@ class RunOrchestrator:
             self._update(run_id, "generating", 0.1, "Generating tables...")
             t0 = time.time()
 
-            if domain == "retail" and not config.prompt:
+            if config.mode != "schema_only" and domain == "retail" and not config.prompt:
                 # Use the demo retail generator
                 n_customers = config.rows.get("customers", 1000)
                 tables = generate_retail(
@@ -104,14 +104,28 @@ class RunOrchestrator:
                 # Schema-only generation
                 tables = {}
                 kinds = {}
-                used_ddl = None
                 for table_def in schema.get("tables", []):
                     n = config.rows.get(table_def["name"], table_def.get("rows", 1000))
                     df = synthesize_from_schema(table_def, n, seed, locale)
                     tables[table_def["name"]] = df
                     for col in table_def.get("columns", []):
                         kinds[col["name"]] = col.get("kind", "text")
+                
+                # Auto-resolve Foreign Keys for AI schemas
+                for tname, df in tables.items():
+                    for col in df.columns:
+                        if col.endswith("_id") and col != "id":
+                            target = col[:-3]
+                            target_tname = target + "s"
+                            if target_tname not in tables:
+                                target_tname = target
+                            if target_tname in tables and "id" in tables[target_tname]:
+                                target_ids = tables[target_tname]["id"].values
+                                if len(target_ids) > 0:
+                                    fk_rng = rng_for(seed, "fk", tname, col)
+                                    df[col] = fk_rng.choice(target_ids, size=len(df))
 
+                used_ddl = schema_to_ddl({"tables": schema.get("tables", [])})
             timings["generate_ms"] = int((time.time() - t0) * 1000)
 
             # ── 2. Edge cases ─────────────────────────────────────
@@ -133,7 +147,19 @@ class RunOrchestrator:
             if used_ddl and len(tables) > 1:
                 try:
                     con = load_sqlite(tables, ddl=used_ddl)
-                    prove_results = prove_it(con)
+                    extra = []
+                    if config.mode == "schema_only":
+                        for tname, df in tables.items():
+                            for col in df.columns:
+                                if col.endswith("_id") and col != "id":
+                                    target = col[:-3]
+                                    target_tname = target + "s"
+                                    if target_tname not in tables:
+                                        target_tname = target
+                                    if target_tname in tables:
+                                        sql = f"SELECT COUNT(*) FROM {tname} a LEFT JOIN {target_tname} b ON a.{col} = b.id WHERE b.id IS NULL"
+                                        extra.append((f"{tname} with no matching {target}", sql))
+                    prove_results = prove_it(con, extra_checks=extra if extra else None)
                     con.close()
                 except Exception as e:
                     prove_results = [{"check": "SQLite validation", "error": str(e),
@@ -231,3 +257,4 @@ class RunOrchestrator:
             _runs[run_id].status = "cancelled"
             return True
         return False
+
