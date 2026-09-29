@@ -33,6 +33,49 @@ from app.scoring.scores import compute_scorecard
 from app.export.engine import ExportEngine
 
 
+def _table_pk(table_def: dict) -> Optional[str]:
+    """Primary key of a schema table: declared key, else first id-kind column."""
+    if table_def.get("primary_key"):
+        return table_def["primary_key"]
+    for c in table_def.get("columns", []):
+        if c.get("kind") == "id":
+            return c["name"]
+    return None
+
+
+def _find_fk_links(table_defs: list, tables: dict) -> list:
+    """Return (child_table, fk_col, parent_table, parent_pk) for every FK column.
+
+    A column is an FK if it has an explicit `ref` ("table.col") or it is named
+    <singular>_id and matches another table. A table's own primary key is never an FK.
+    """
+    pks = {t["name"]: _table_pk(t) for t in table_defs}
+    links = []
+    for t in table_defs:
+        tname = t["name"]
+        if tname not in tables:
+            continue
+        for c in t.get("columns", []):
+            col = c["name"]
+            if col == pks.get(tname) or col not in tables[tname].columns:
+                continue
+            target = None
+            ref = c.get("ref")
+            if ref and "." in ref:
+                rt, rc = ref.split(".", 1)
+                if rt in tables and rc in tables[rt].columns:
+                    target = (rt, rc)
+            elif col.endswith("_id"):
+                base = col[:-3]
+                for cand in (base + "s", base, base + "es", base[:-1] + "ies" if base.endswith("y") else None):
+                    if cand and cand in tables and cand != tname and pks.get(cand) in tables[cand].columns:
+                        target = (cand, pks[cand])
+                        break
+            if target:
+                links.append((tname, col, target[0], target[1]))
+    return links
+
+
 _executor = ThreadPoolExecutor(max_workers=2, thread_name_prefix="synthgen")
 _runs: dict[str, RunStatus] = {}
 _run_data: dict[str, dict] = {}
@@ -65,7 +108,11 @@ class RunOrchestrator:
             self._update(run_id, "generating", 0.1, "Generating tables...")
             t0 = time.time()
 
-            if config.mode != "schema_only" and domain == "retail" and not config.prompt:
+            names = {t.get("name") for t in schema.get("tables", [])}
+            builtin_retail = domain == "retail" and {"customers", "orders", "order_items"} <= names
+            builtin_fintech = domain == "fintech" and {"accounts", "transactions"} <= names
+
+            if builtin_retail and not config.prompt:
                 # Use the demo retail generator
                 n_customers = config.rows.get("customers", 1000)
                 tables = generate_retail(
@@ -82,7 +129,7 @@ class RunOrchestrator:
                     "item_id": "id", "quantity": "int", "line_total": "money",
                 }
                 used_ddl = RETAIL_DDL
-            elif domain == "fintech" and not config.prompt:
+            elif builtin_fintech and not config.prompt:
                 n_accounts = config.rows.get("accounts", 500)
                 tables = generate_fintech(
                     seed=seed,
@@ -112,18 +159,12 @@ class RunOrchestrator:
                         kinds[col["name"]] = col.get("kind", "text")
                 
                 # Auto-resolve Foreign Keys for AI schemas
-                for tname, df in tables.items():
-                    for col in df.columns:
-                        if col.endswith("_id") and col != "id":
-                            target = col[:-3]
-                            target_tname = target + "s"
-                            if target_tname not in tables:
-                                target_tname = target
-                            if target_tname in tables and "id" in tables[target_tname]:
-                                target_ids = tables[target_tname]["id"].values
-                                if len(target_ids) > 0:
-                                    fk_rng = rng_for(seed, "fk", tname, col)
-                                    df[col] = fk_rng.choice(target_ids, size=len(df))
+                fk_links = _find_fk_links(schema.get("tables", []), tables)
+                for tname, col, target_tname, target_pk in fk_links:
+                    target_ids = tables[target_tname][target_pk].values
+                    if len(target_ids) > 0:
+                        fk_rng = rng_for(seed, "fk", tname, col)
+                        tables[tname][col] = fk_rng.choice(target_ids, size=len(tables[tname]))
 
                 used_ddl = schema_to_ddl({"tables": schema.get("tables", [])})
             timings["generate_ms"] = int((time.time() - t0) * 1000)
@@ -149,16 +190,10 @@ class RunOrchestrator:
                     con = load_sqlite(tables, ddl=used_ddl)
                     extra = []
                     if config.mode == "schema_only":
-                        for tname, df in tables.items():
-                            for col in df.columns:
-                                if col.endswith("_id") and col != "id":
-                                    target = col[:-3]
-                                    target_tname = target + "s"
-                                    if target_tname not in tables:
-                                        target_tname = target
-                                    if target_tname in tables:
-                                        sql = f"SELECT COUNT(*) FROM {tname} a LEFT JOIN {target_tname} b ON a.{col} = b.id WHERE b.id IS NULL"
-                                        extra.append((f"{tname} with no matching {target}", sql))
+                        for tname, col, target_tname, target_pk in _find_fk_links(schema.get("tables", []), tables):
+                            sql = (f"SELECT COUNT(*) FROM {tname} a LEFT JOIN {target_tname} b "
+                                   f"ON a.{col} = b.{target_pk} WHERE a.{col} IS NOT NULL AND b.{target_pk} IS NULL")
+                            extra.append((f"{tname}.{col} has no matching {target_tname}.{target_pk}", sql))
                     prove_results = prove_it(con, extra_checks=extra if extra else None)
                     con.close()
                 except Exception as e:

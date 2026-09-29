@@ -105,6 +105,10 @@ class OfflineFallback:
 
         # Get template
         from app.engines.relational.retail import get_retail_schema
+        retail_words = ("customer", "order", "product", "retail", "shop", "store")
+        if domain == "retail" and not any(w in prompt_lower for w in retail_words) \
+                and self._entities_from_prompt(prompt):
+            domain = "custom"  # entities named in the prompt but no known domain
         if domain == "retail":
             schema = get_retail_schema()
         else:
@@ -228,20 +232,87 @@ class OfflineFallback:
                                  "description": f"Increase weight for {city}"})
         return changes
 
+    _EVENT_WORDS = ("appointment", "order", "visit", "transaction", "payment", "bill", "record",
+                    "enrollment", "enrolment", "booking", "reservation", "prescription", "invoice",
+                    "item", "attendance", "payroll", "usage", "claim", "shipment", "review", "ticket")
+
+    @staticmethod
+    def _singular(word: str) -> str:
+        w = word.lower()
+        if w.endswith("ies") and len(w) > 4:
+            return w[:-3] + "y"
+        if w.endswith("ses") or w.endswith("xes"):
+            return w[:-2]
+        if w.endswith("s") and not w.endswith("ss"):
+            return w[:-1]
+        return w
+
+    def _entities_from_prompt(self, prompt: str) -> list[str]:
+        """Pull a comma/and separated noun list out of a prompt like
+        'Include patients, doctors, and appointments'."""
+        text = prompt.lower()
+        m = re.search(r"(?:include|including|with|containing|contains|has|having|tables?(?: for)?|for)\s+([a-z_ ,&/-]+)", text)
+        if not m:
+            return []
+        chunk = re.split(r"[.;:\n]", m.group(1))[0]
+        parts = re.split(r",|\band\b|&|/", chunk)
+        stop = {"a", "an", "the", "system", "dataset", "data", "database", "some", "their", "its", "many", "all"}
+        out: list[str] = []
+        for part in parts:
+            words = [w for w in re.findall(r"[a-z_]+", part) if w not in stop]
+            if not words or len(words) > 2:
+                continue
+            noun = "_".join(words)
+            if noun not in out:
+                out.append(noun)
+        return out if len(out) >= 2 else []
+
     def _build_generic_schema(self, prompt: str, domain: str) -> dict:
         tmpl = DOMAIN_TEMPLATES.get(domain, DOMAIN_TEMPLATES["retail"])
+        names = self._entities_from_prompt(prompt) or (
+            {"healthcare": ["patients", "doctors", "appointments"]}.get(domain) or list(tmpl["tables"]))
+        names = [n if n.endswith("s") else n + "s" for n in names]
+        singles = {n: self._singular(n) for n in names}
+
+        def is_event(n: str) -> bool:
+            return any(singles[n].endswith(w) for w in self._EVENT_WORDS)
+
+        children = [n for n in names if is_event(n)]
+        if not children and len(names) > 1:
+            children = [names[-1]]
+        parents = [n for n in names if n not in children]
+
+        tables, rels = [], []
+        for n in names:
+            sg = singles[n]
+            cols = [{"name": f"{sg}_id", "kind": "id", "nullable": False}]
+            if n in children:
+                for par in parents:
+                    cols.append({"name": f"{singles[par]}_id", "kind": "int", "nullable": False,
+                                 "ref": f"{par}.{singles[par]}_id"})
+                    rels.append({"parent": par, "child": n, "cardinality": "1:N", "mean_children": 3})
+                cols += [
+                    {"name": f"{sg}_date", "kind": "date", "start": "2024-01-01", "end": "2025-12-31"},
+                    {"name": "status", "kind": "cat",
+                     "weights": {"completed": 0.7, "pending": 0.2, "cancelled": 0.1}},
+                ]
+            else:
+                cols.append({"name": "name", "kind": "text", "pii": "direct"})
+                cols.append({"name": "created_at", "kind": "date", "start": "2022-01-01", "end": "2025-12-31"})
+                if sg == "doctor":
+                    cols.append({"name": "specialty", "kind": "cat", "weights": {
+                        "General": 0.35, "Cardiology": 0.15, "Pediatrics": 0.2, "Neurology": 0.1, "Oncology": 0.1, "Orthopedics": 0.1}})
+            tables.append({"name": n, "rows": 200 if n in parents else 1000,
+                           "primary_key": f"{sg}_id", "columns": cols})
+
         return {
             "name": tmpl["name"],
             "domain": domain,
             "locale": "us",
             "currency": "USD",
-            "tables": [{"name": t, "rows": 1000, "columns": [
-                {"name": f"{t[:-1]}_id" if t.endswith("s") else f"{t}_id", "kind": "id"},
-                {"name": "name", "kind": "text"},
-                {"name": "created_at", "kind": "date"},
-            ]} for t in tmpl["tables"]],
-            "relationships": [],
-            "note": f"Auto-generated {domain} template. Please customize.",
+            "tables": tables,
+            "relationships": rels,
+            "note": f"Offline {domain} schema built from your prompt. Review and customize.",
         }
 
     def _locale_code(self, locale: str) -> str:

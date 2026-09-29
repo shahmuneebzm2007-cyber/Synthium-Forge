@@ -81,6 +81,16 @@ def infer_kind(s: pd.Series, col_name: str = "") -> str:
     if str_vals.head(200).map(lambda v: bool(EMAIL_RE.match(v))).mean() > 0.7:
         return "email"
 
+    # Date (checked BEFORE phone: ISO dates like 2024-04-08 match loose phone patterns)
+    if str_vals.head(200).map(lambda v: bool(re.match(r"^\d{4}-\d{2}-\d{2}([ T]\d{2}:\d{2}(:\d{2})?)?$", v))).mean() > 0.9:
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            _p = pd.to_datetime(str_vals, errors="coerce")
+        if _p.notna().mean() >= 0.90:
+            if _p.dropna().dt.time.eq(pd.Timestamp("00:00:00").time()).all():
+                return "date"
+            return "datetime"
+
     # Phone
     if str_vals.head(200).map(lambda v: bool(PHONE_RE.match(v))).mean() > 0.7:
         return "phone"
