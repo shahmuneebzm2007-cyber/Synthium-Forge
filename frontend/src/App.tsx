@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Layers, FileText, Database, Shield, Settings, Menu } from 'lucide-react';
+import { Layers, FileText, Database, Shield, Settings, Menu, ShieldCheck } from 'lucide-react';
 import TabularGen from './pages/TabularGen';
 import DocumentGen from './pages/DocumentGen';
 import PrivacyScan from './pages/PrivacyScan';
 import RelationalGen from './pages/RelationalGen';
+import Compliance from './pages/Compliance';
 
 function App() {
   const [activeTab, setActiveTab] = useState('tabular');
@@ -14,6 +15,7 @@ function App() {
     { id: 'relational', label: 'Relational AI Demo', icon: Layers },
     { id: 'documents', label: 'Document Studio', icon: FileText },
     { id: 'privacy', label: 'Privacy Scanner', icon: Shield },
+    { id: 'compliance', label: 'Compliance & Legal', icon: ShieldCheck },
     { id: 'settings', label: 'Settings', icon: Settings },
   ];
 
@@ -53,26 +55,14 @@ function App() {
             </button>
           ))}
         </nav>
-        
-        <div className="absolute bottom-0 w-full p-4 border-t border-slate-200">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-xs">
-              AI
-            </div>
-            <div>
-              <p className="text-sm font-medium text-slate-900">Engine Active</p>
-              <p className="text-xs text-slate-500">Gemini 2.5 Connected</p>
-            </div>
-          </div>
-        </div>
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        <header className="h-16 flex items-center px-4 sm:px-6 lg:px-8 bg-white border-b border-slate-200 shrink-0">
+      <main className="flex-1 flex flex-col h-screen overflow-hidden">
+        <header className="h-16 bg-white border-b border-slate-200 flex items-center px-4 md:px-8 shrink-0">
           <button 
             onClick={() => setSidebarOpen(true)}
-            className="mr-4 p-2 rounded-md text-slate-400 hover:text-slate-500 hover:bg-slate-100 md:hidden"
+            className="p-2 -ml-2 mr-2 text-slate-500 hover:bg-slate-100 rounded-lg md:hidden"
           >
             <Menu className="w-6 h-6" />
           </button>
@@ -81,19 +71,26 @@ function App() {
           </h1>
         </header>
 
-        <div className="flex-1 overflow-auto p-4 sm:p-6 lg:p-8">
+        <div className="flex-1 overflow-auto p-4 md:p-8 bg-slate-50/50">
           <div className="max-w-6xl mx-auto">
-            {activeTab === 'tabular' && <TabularGen />}
-            {activeTab === 'relational' && <RelationalGen />}
-            {activeTab === 'documents' && <DocumentGen />}
-            {activeTab === 'privacy' && <PrivacyScan />}
-            {activeTab === 'settings' && (
-              <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm text-center">
-                <Shield className="w-12 h-12 text-slate-300 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-900">Settings coming soon</h3>
-                <p className="text-slate-500">API keys are currently managed via .env securely.</p>
-              </div>
-            )}
+            {(() => {
+              switch (activeTab) {
+                case 'tabular':
+                  return <TabularGen />;
+                case 'relational':
+                  return <RelationalGen />;
+                case 'documents':
+                  return <DocumentGen />;
+                case 'privacy':
+                  return <PrivacyScan />;
+                case 'compliance':
+                  return <Compliance />;
+                case 'settings':
+                  return <div className="p-6 bg-white rounded-xl border border-slate-200">Settings coming soon...</div>;
+                default:
+                  return <TabularGen />;
+              }
+            })()}
           </div>
         </div>
       </main>

@@ -1,13 +1,19 @@
 import { useState } from 'react';
-import { FileText, Play, Download, Loader2, CheckCircle2 } from 'lucide-react';
+import { FileText, Play, Download, Loader2, CheckCircle2, FileSpreadsheet, Building2 } from 'lucide-react';
 import api from '../api';
 
 export default function DocumentGen() {
+  const [activeTab, setActiveTab] = useState<'invoice' | 'statement'>('invoice');
   const [count, setCount] = useState(2);
   const [minBalance, setMinBalance] = useState(500);
   const [targetClosing, setTargetClosing] = useState(3000);
   const [loadingType, setLoadingType] = useState<'none' | 'invoice' | 'statement'>('none');
   const [documents, setDocuments] = useState<any[]>([]);
+
+  const handleTabSwitch = (tab: 'invoice' | 'statement') => {
+    setActiveTab(tab);
+    setDocuments([]); // Clear documents when switching views
+  };
 
   const handleGenerateInvoices = async () => {
     setLoadingType('invoice');
@@ -58,65 +64,96 @@ export default function DocumentGen() {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
-          <div>
-            <h2 className="text-lg font-semibold text-slate-800 flex items-center">
-              <FileText className="w-5 h-5 mr-2 text-blue-600" />
-              Fintech Document Studio
-            </h2>
-            <p className="text-sm text-slate-500 mt-1">Generate perfectly reconciled, synthetic PDF invoices and bank statements.</p>
+        <div className="flex flex-col mb-6">
+          <h2 className="text-xl font-bold text-slate-800 flex items-center mb-2">
+            <FileText className="w-6 h-6 mr-2 text-blue-600" />
+            Fintech Document Studio
+          </h2>
+          <p className="text-sm text-slate-500 mb-6">Generate perfectly reconciled, synthetic PDF invoices and bank statements for B2B testing.</p>
+          
+          {/* Tabs */}
+          <div className="flex space-x-6 border-b border-slate-200 mb-6">
+            <button 
+              onClick={() => handleTabSwitch('invoice')} 
+              className={`pb-3 px-1 text-sm font-medium flex items-center transition-colors ${activeTab === 'invoice' ? 'border-b-2 border-indigo-600 text-indigo-700' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <FileSpreadsheet className="w-4 h-4 mr-2" />
+              Invoice Generator
+            </button>
+            <button 
+              onClick={() => handleTabSwitch('statement')} 
+              className={`pb-3 px-1 text-sm font-medium flex items-center transition-colors ${activeTab === 'statement' ? 'border-b-2 border-emerald-600 text-emerald-700' : 'text-slate-500 hover:text-slate-700'}`}
+            >
+              <Building2 className="w-4 h-4 mr-2" />
+              Bank Statement Generator
+            </button>
           </div>
           
-          <div className="mt-4 md:mt-0 flex flex-col space-y-4 w-full md:w-auto">
-            {/* Invoice Controls */}
-            <div className="flex items-center justify-end space-x-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
-              <div className="flex items-center space-x-2 mr-2">
-                <span className="text-xs text-slate-500 font-medium">Invoice Count:</span>
-                <input 
-                  type="number" 
-                  value={count} 
-                  onChange={(e) => setCount(Number(e.target.value))}
-                  className="w-16 px-2 py-1.5 border border-slate-300 rounded text-sm text-center focus:ring-1 focus:ring-blue-500"
-                  min="1" max="10"
-                />
+          {/* Active Tab Content */}
+          <div className="w-full">
+            {activeTab === 'invoice' && (
+              <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4 bg-indigo-50/50 p-4 rounded-xl border border-indigo-100">
+                <div className="flex-1">
+                  <h3 className="font-semibold text-indigo-900 text-sm">Synthetic Invoices</h3>
+                  <p className="text-xs text-indigo-700/70 mt-1">Generates multi-line item invoices that are guaranteed to reconcile perfectly.</p>
+                </div>
+                <div className="flex items-center space-x-3 bg-white p-2 rounded-lg border border-indigo-100 shadow-sm">
+                  <div className="flex items-center space-x-2 px-2">
+                    <span className="text-xs text-slate-500 font-medium uppercase tracking-wide">Count:</span>
+                    <input 
+                      type="number" 
+                      value={count} 
+                      onChange={(e) => setCount(Number(e.target.value))}
+                      className="w-16 px-2 py-1.5 border border-slate-200 rounded text-sm text-center focus:ring-2 focus:ring-indigo-500 outline-none"
+                      min="1" max="10"
+                    />
+                  </div>
+                  <button 
+                    onClick={handleGenerateInvoices}
+                    disabled={loadingType !== 'none'}
+                    className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-md font-medium text-sm flex items-center transition-all shadow-sm disabled:opacity-50"
+                  >
+                    {loadingType === 'invoice' ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Play className="w-4 h-4 mr-2 fill-current" />}
+                    {loadingType === 'invoice' ? 'Rendering PDFs...' : 'Generate Invoices'}
+                  </button>
+                </div>
               </div>
-              <button 
-                onClick={handleGenerateInvoices}
-                disabled={loadingType !== 'none'}
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center transition-colors disabled:opacity-50"
-              >
-                {loadingType === 'invoice' ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Play className="w-4 h-4 mr-2" />}
-                {loadingType === 'invoice' ? 'Rendering...' : 'Generate Invoices'}
-              </button>
-            </div>
+            )}
             
-            {/* Statement Controls */}
-            <div className="flex items-center justify-end space-x-3 bg-slate-50 p-3 rounded-lg border border-slate-200">
-              <div className="flex items-center space-x-4 mr-2">
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs text-slate-600 font-medium">Min Balance ($):</span>
-                  <input type="number" value={minBalance} onChange={e => setMinBalance(Number(e.target.value))} className="w-20 px-2 py-1 text-sm border rounded focus:ring-1 focus:ring-blue-500" />
+            {activeTab === 'statement' && (
+              <div className="flex flex-col md:flex-row md:items-center space-y-4 md:space-y-0 md:space-x-4 bg-emerald-50/50 p-4 rounded-xl border border-emerald-100">
+                <div className="flex-1">
+                  <h3 className="font-semibold text-emerald-900 text-sm">Reconciled Bank Statements</h3>
+                  <p className="text-xs text-emerald-700/70 mt-1">Generates a 90-day transaction history that strictly respects your target balance constraints.</p>
                 </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-xs text-slate-600 font-medium">Target End ($):</span>
-                  <input type="number" value={targetClosing} onChange={e => setTargetClosing(Number(e.target.value))} className="w-20 px-2 py-1 text-sm border rounded focus:ring-1 focus:ring-blue-500" />
+                <div className="flex items-center space-x-3 bg-white p-2 rounded-lg border border-emerald-100 shadow-sm">
+                  <div className="flex items-center space-x-3 px-2">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide mb-1">Min Floor ($)</span>
+                      <input type="number" value={minBalance} onChange={e => setMinBalance(Number(e.target.value))} className="w-20 px-2 py-1 text-sm border border-slate-200 rounded focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wide mb-1">Target End ($)</span>
+                      <input type="number" value={targetClosing} onChange={e => setTargetClosing(Number(e.target.value))} className="w-20 px-2 py-1 text-sm border border-slate-200 rounded focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50" />
+                    </div>
+                  </div>
+                  <button 
+                    onClick={handleGenerateStatements}
+                    disabled={loadingType !== 'none'}
+                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 mt-4 rounded-md font-medium text-sm flex items-center transition-all shadow-sm disabled:opacity-50"
+                  >
+                    {loadingType === 'statement' ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Play className="w-4 h-4 mr-2 fill-current" />}
+                    {loadingType === 'statement' ? 'Rendering...' : 'Generate Statement'}
+                  </button>
                 </div>
               </div>
-              <button 
-                onClick={handleGenerateStatements}
-                disabled={loadingType !== 'none'}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium text-sm flex items-center transition-colors disabled:opacity-50"
-              >
-                {loadingType === 'statement' ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Play className="w-4 h-4 mr-2" />}
-                {loadingType === 'statement' ? 'Rendering...' : 'Generate Statement'}
-              </button>
-            </div>
+            )}
           </div>
         </div>
       </div>
 
       {documents.length > 0 && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
           {documents.map((doc, idx) => {
             const isInvoice = !!doc.invoice;
             const title = isInvoice ? doc.invoice.invoice_number : doc.statement.account_number;
@@ -171,7 +208,7 @@ export default function DocumentGen() {
                   </div>
                 )}
 
-                <div className="flex-1 p-0 h-[400px]">
+                <div className="flex-1 p-0 h-[500px]">
                   <iframe 
                     src={`data:application/pdf;base64,${doc.pdf_base64}`}
                     className="w-full h-full border-0"
