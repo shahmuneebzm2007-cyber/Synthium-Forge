@@ -15,25 +15,25 @@ Rules:
 2. Every column must have a "kind" from: id, int, num, money, date, datetime, cat, text, bool, fk, email, phone, address, url
 3. Use "id" for primary keys, "fk" for foreign keys with a "ref" field like "table.column"
 4. Money columns must use integer minor units (cents)
-5. Include realistic "weights" for categorical columns
-6. Include relationships for multi-table schemas
-7. All company/person names must be fictional
-8. Email domains must be example.com
-9. Account numbers must use invalid patterns
+5. Include realistic "weights" for categorical columns. FOR ANY text fields with recurring values (like feedback, status, property types, car models), FORCE them to be "cat" with 5-10 realistic examples in "weights".
+6. FOR ALL numbers (int, num, money) you MUST provide "minimum" and "maximum" fields. (e.g., bedrooms min 1 max 8, ratings min 1 max 5, etc.)
+7. Include relationships for multi-table schemas
+8. All company/person names must be fictional
+9. Email domains must be example.com
 
 Output format:
 {{
   "name": "schema_name",
   "locale": "us",
   "currency": "USD",
-  "domain": "retail",
+  "domain": "custom",
   "tables": [
     {{
       "name": "table_name",
       "rows": 1000,
       "primary_key": "id_column",
       "columns": [
-        {{"name": "col", "kind": "type", "nullable": false, ...}}
+        {{"name": "col", "kind": "type", "nullable": false, "minimum": 1, "maximum": 10, "weights": {{"Example1": 0.5, "Example2": 0.5}}}}
       ]
     }}
   ],
@@ -99,34 +99,11 @@ STATEMENT_QUERY_PARSE = """Parse this bank statement request into structured con
 
 Request: "{query}"
 
-Output:
+Output JSON:
 {{
-  "period": {{"days": 90}},
-  "opening_balance": 120000,
-  "constraints": {{
-    "min_balance": null,
-    "ending_balance": {{"target": null, "tolerance": 5000}},
-    "max_transaction": null
-  }},
-  "recurring": [
-    {{"type": "salary|rent|utilities", "day": 1, "amount": 180000, "description": "..."}}
-  ],
-  "spend_mix": {{
-    "groceries": 0.25, "fuel": 0.15, "dining": 0.12
-  }}
+  "min_balance": 500.00,
+  "target_closing": 1200.00,
+  "spend_mix": {{"groceries": 0.4, "entertainment": 0.2}},
+  "recurring": ["netflix", "rent"]
 }}
-
-Note: All amounts in integer minor units (cents). 1200.00 = 120000.
-"""
-
-VOCAB_BANK_GENERATE = """Generate {size} fictional but realistic {semantic} values for locale {locale}.
-
-Rules:
-- All values must be obviously fictional
-- Use culturally appropriate names/values
-- Email domains: example.com only
-- Phone numbers: use reserved/invalid ranges
-- No real company names or brands
-
-Output as a JSON array of strings.
 """
