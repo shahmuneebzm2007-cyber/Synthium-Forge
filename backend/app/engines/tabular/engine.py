@@ -93,6 +93,16 @@ def fictional(hint: str, i: int, fake: Faker, locale: str = "en_US") -> str:
         return fake.job()
     if "color" in h:
         return fake.color_name()
+    if "car" in h or "vehicle" in h or "model" in h:
+        return fake.random_element(("Toyota Camry", "Honda Civic", "Ford F-150", "Tesla Model 3", "Chevy Equinox", "Nissan Altima"))
+    if "plate" in h or "license" in h:
+        return fake.license_plate()
+    if "location" in h or "city" in h or "address" in h or "dropoff" in h or "pickup" in h:
+        return fake.city()
+    if "state" in h:
+        return fake.state()
+    if "country" in h:
+        return fake.country()
     
     # Generic string fallback for unknown text/cats
     return fake.word().capitalize()
@@ -375,9 +385,23 @@ def synthesize_from_schema(
         elif kind == "bool":
             p = col.get("true_rate", 0.5)
             data[name] = rng.random(n) < p
-        elif kind in ("int", "num", "money"):
-            lo = minimum if minimum is not None else 0
-            hi = maximum if maximum is not None else 10000
+        elif kind in ("int", "num", "money", "float"):
+            lo = minimum
+            hi = maximum
+            if lo is None or hi is None:
+                h = name.lower()
+                if "rating" in h or "score" in h:
+                    lo = lo if lo is not None else 1
+                    hi = hi if hi is not None else 5
+                elif "distance" in h or "length" in h:
+                    lo = lo if lo is not None else 1
+                    hi = hi if hi is not None else 50
+                elif "fare" in h or "amount" in h or "price" in h:
+                    lo = lo if lo is not None else 5
+                    hi = hi if hi is not None else 150
+                else:
+                    lo = lo if lo is not None else 0
+                    hi = hi if hi is not None else 10000
             vals = rng.uniform(lo, hi, n)
             if kind in ("int", "money"):
                 vals = np.rint(vals).astype(np.int64)
