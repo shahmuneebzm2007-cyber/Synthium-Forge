@@ -251,7 +251,7 @@ class OfflineFallback:
         """Pull a comma/and separated noun list out of a prompt like
         'Include patients, doctors, and appointments'."""
         text = prompt.lower()
-        m = re.search(r"(?:include|including|with|containing|contains|has|having|tables?(?: for)?|for)\s+([a-z_ ,&/-]+)", text)
+        m = re.search(r"(?:include|including|with|containing|contains|has|having|tables)\s+([a-z_ ,&/-]+)", text)
         if not m:
             return []
         chunk = re.split(r"[.;:\n]", m.group(1))[0]

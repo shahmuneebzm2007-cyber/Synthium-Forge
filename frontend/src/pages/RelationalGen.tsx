@@ -20,7 +20,7 @@ export default function RelationalGen() {
     setPreviewData(null);
     setManifest(null);
     try {
-      const res = await api.post('/schema/infer', { prompt, domain: 'healthcare' });
+      const res = await api.post('/schema/infer', { prompt, domain: 'custom' });
       setSchema(res.data);
     } catch (err) {
       console.error(err);

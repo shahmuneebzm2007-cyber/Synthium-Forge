@@ -87,6 +87,12 @@ def fictional(hint: str, i: int, fake: Faker, locale: str = "en_US") -> str:
         return f"XXX-XX-{i:04d}"
     if "card" in h or "account" in h:
         return f"XXXX-XXXX-XXXX-{i:04d}"
+    if "time" in h:
+        return fake.time(pattern="%I:%M %p")
+    if "job" in h or "title" in h:
+        return fake.job()
+    if "color" in h:
+        return fake.color_name()
     
     # Generic string fallback for unknown text/cats
     return fake.word().capitalize()
